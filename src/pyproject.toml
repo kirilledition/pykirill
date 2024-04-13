@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pykirill"
+version = "0.0"
+requires-python = ">= 3.8"
+dependencies = ["numpy", "matplotlib", "seaborn"]
+authors = [{ name = "Kirill", email = "kirill@kirill.kirill" }]
+maintainers = [{ name = "Kirill", email = "kirill@kirill.kirill" }]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/kirilledition/pykirill"
+Repository = "https://github.com/kirilledition/pykirill"
+
+
+[project.scripts]
+pykirill = "pykirill:cli.main"
