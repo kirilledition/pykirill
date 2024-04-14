@@ -11,7 +11,7 @@ authors = [{ name = "Kirill", email = "kirill@kirill.kirill" }]
 maintainers = [{ name = "Kirill", email = "kirill@kirill.kirill" }]
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff", "mypy"]
+dev = ["pytest", "ruff", "mypy", "ipython"]
 
 [project.urls]
 Homepage = "https://github.com/kirilledition/pykirill"
