@@ -9,38 +9,22 @@ class TestScale:
         x = np.array([1, 2, 3, 4], dtype=np.float32)
         scaled_x = scale(x)
 
-        expected = np.array(
-            [-1.3416407, -0.4472136, 0.4472136, 1.3416407], dtype=np.float32
-        )
-        np.testing.assert_array_almost_equal(
-            scaled_x, expected, err_msg="Incorrect result"
-        )
+        expected = np.array([-1.3416407, -0.4472136, 0.4472136, 1.3416407], dtype=np.float32)
+        np.testing.assert_array_almost_equal(scaled_x, expected, err_msg="Incorrect result")
 
-        np.testing.assert_array_almost_equal(
-            scaled_x.mean(), 0.0, err_msg="Mean is not zero"
-        )
-        np.testing.assert_array_almost_equal(
-            scaled_x.std(), 1.0, err_msg="Standard deviation is not one"
-        )
+        np.testing.assert_array_almost_equal(scaled_x.mean(), 0.0, err_msg="Mean is not zero")
+        np.testing.assert_array_almost_equal(scaled_x.std(), 1.0, err_msg="Standard deviation is not one")
 
     def test_with_nan(self):
         # Include NaN values in the input
         x = np.array([np.nan, 1, 2, 3, 4], dtype=np.float32)
         scaled_x = scale(x)
 
-        expected = np.array(
-            [np.nan, -1.3416407, -0.4472136, 0.4472136, 1.3416407], dtype=np.float32
-        )
-        np.testing.assert_array_almost_equal(
-            scaled_x, expected, err_msg="Incorrect result"
-        )
+        expected = np.array([np.nan, -1.3416407, -0.4472136, 0.4472136, 1.3416407], dtype=np.float32)
+        np.testing.assert_array_almost_equal(scaled_x, expected, err_msg="Incorrect result")
 
-        np.testing.assert_array_almost_equal(
-            np.nanmean(scaled_x), 0.0, err_msg="Mean is not zero"
-        )
-        np.testing.assert_array_almost_equal(
-            np.nanstd(scaled_x), 1.0, err_msg="Standard deviation is not one"
-        )
+        np.testing.assert_array_almost_equal(np.nanmean(scaled_x), 0.0, err_msg="Mean is not zero")
+        np.testing.assert_array_almost_equal(np.nanstd(scaled_x), 1.0, err_msg="Standard deviation is not one")
 
 
 class TestLogScale:
@@ -49,22 +33,14 @@ class TestLogScale:
         x = np.array([1, 2, 3, 4], dtype=np.float32)
         log_scaled_x = log_scale(x)
 
-        expected = np.array(
-            [-1.526072, -0.19470063, 0.5841019, 1.1366711], dtype=np.float32
-        )
+        expected = np.array([-1.526072, -0.19470063, 0.5841019, 1.1366711], dtype=np.float32)
 
         assert np.all(np.isfinite(log_scaled_x)), "Result contains NaN or inf"
 
-        np.testing.assert_array_almost_equal(
-            log_scaled_x, expected, err_msg="Incorrect result"
-        )
+        np.testing.assert_array_almost_equal(log_scaled_x, expected, err_msg="Incorrect result")
 
-        np.testing.assert_array_almost_equal(
-            log_scaled_x.mean(), 0.0, err_msg="Mean is not zero"
-        )
-        np.testing.assert_array_almost_equal(
-            log_scaled_x.std(), 1.0, err_msg="Standard deviation is not one"
-        )
+        np.testing.assert_array_almost_equal(log_scaled_x.mean(), 0.0, err_msg="Mean is not zero")
+        np.testing.assert_array_almost_equal(log_scaled_x.std(), 1.0, err_msg="Standard deviation is not one")
 
     def test_with_nan(self):
         # Only positive values for log_scale
@@ -76,20 +52,12 @@ class TestLogScale:
             dtype=np.float32,
         )
 
-        assert (
-            np.sum(np.isfinite(log_scaled_x)) > 1
-        ), "Result contains more then one NaN or inf"
+        assert np.sum(np.isfinite(log_scaled_x)) > 1, "Result contains more then one NaN or inf"
 
-        np.testing.assert_array_almost_equal(
-            log_scaled_x, expected, err_msg="Incorrect result"
-        )
+        np.testing.assert_array_almost_equal(log_scaled_x, expected, err_msg="Incorrect result")
 
-        np.testing.assert_array_almost_equal(
-            np.nanmean(log_scaled_x), 0.0, err_msg="Mean is not zero"
-        )
-        np.testing.assert_array_almost_equal(
-            np.nanstd(log_scaled_x), 1.0, err_msg="Standard deviation is not one"
-        )
+        np.testing.assert_array_almost_equal(np.nanmean(log_scaled_x), 0.0, err_msg="Mean is not zero")
+        np.testing.assert_array_almost_equal(np.nanstd(log_scaled_x), 1.0, err_msg="Standard deviation is not one")
 
     def test_with_zero_elements(self):
         # Input contains zero, should handle gracefully without errors

@@ -15,12 +15,8 @@ class TestSetup:
         current_context = sns.plotting_context()
 
         # Check specific properties to ensure the context is set to "notebook"
-        assert (
-            current_context["font.size"] == 12
-        ), "Font size should be 12 for 'notebook' context"
-        assert (
-            current_context["axes.titlesize"] == 12
-        ), "Axes title size should be 12 for 'notebook' context"
+        assert current_context["font.size"] == 12, "Font size should be 12 for 'notebook' context"
+        assert current_context["axes.titlesize"] == 12, "Axes title size should be 12 for 'notebook' context"
 
     def test_setup_seaborn_palette(self):
         setup()
@@ -59,14 +55,10 @@ class TestSetup:
         mock_get_ipython.return_value = mock_ipy_instance
         setup()
         mock_ipy_instance.run_line_magic.assert_any_call("matplotlib", "inline")
-        mock_ipy_instance.run_line_magic.assert_any_call(
-            "config", "InlineBackend.figure_format = 'retina'"
-        )
+        mock_ipy_instance.run_line_magic.assert_any_call("config", "InlineBackend.figure_format = 'retina'")
 
     def test_matplotlib_and_seaborn_configurations(self):
         setup()
-        assert (
-            plt.rcParams["image.cmap"] == "viridis"
-        ), "Matplotlib colormap should be 'viridis'"
+        assert plt.rcParams["image.cmap"] == "viridis", "Matplotlib colormap should be 'viridis'"
         current_style = sns.axes_style()
         assert current_style["axes.grid"], "Seaborn grid should be on"

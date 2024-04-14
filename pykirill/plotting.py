@@ -17,16 +17,12 @@ def setup() -> None:
     try:
         import IPython
     except ImportError:
-        logger.warning(
-            "IPython is not installed, IPython-specific configurations are skipped."
-        )
+        logger.warning("IPython is not installed, IPython-specific configurations are skipped.")
         return
 
     ipython = IPython.get_ipython()
     if not ipython:
-        logger.info(
-            "Not running in an IPython environment. IPython-specific configurations are skipped."
-        )
+        logger.info("Not running in an IPython environment. IPython-specific configurations are skipped.")
         return
 
     ipython.run_line_magic("matplotlib", "inline")

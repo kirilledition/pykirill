@@ -11,7 +11,7 @@ authors = [{ name = "Kirill", email = "kirill@kirill.kirill" }]
 maintainers = [{ name = "Kirill", email = "kirill@kirill.kirill" }]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "black", "mypy"]
 
 [project.urls]
 Homepage = "https://github.com/kirilledition/pykirill"
@@ -20,3 +20,13 @@ Repository = "https://github.com/kirilledition/pykirill"
 
 [project.scripts]
 pykirill = "pykirill:cli.main"
+
+[tool.black]
+line-length = 120
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "pykirill"]
+
+[tool.mypy]
+files = ["pykirill", "tests"]
+ignore_missing_imports = true
