@@ -3,6 +3,7 @@ from matplotlib import pyplot as plt
 import matplotlib.font_manager
 import logging
 import math
+import typing
 import numpy as np
 
 
@@ -164,7 +165,7 @@ class SubplotsManager:
             return self.axes[idx]
         raise IndexError("Index out of range")
 
-    def __iter__(self) -> iter[plt.Axes]:
+    def __iter__(self) -> typing.Iterator[plt.Axes]:
         """
         Returns an iterator over the subplot Axes objects.
 
