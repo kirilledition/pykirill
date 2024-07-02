@@ -31,3 +31,9 @@ log_scaled_x = transforms.log_scale(x)
 ## License
 
 `pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](LICENSE) file.
+
+## TODO
+[] - Tests for plotting module
+[] - Write usage for plotting functions
+[] - Update usage for transforms in case of dataframes
+[] - New release
