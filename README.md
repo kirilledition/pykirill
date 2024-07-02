@@ -15,9 +15,22 @@ Here are quick examples of how to use `pykirill`:
 
 ### Plotting
 ```python
-from pykirill import plotting as kplt
+from pykirill import plotting
 
-kplt.setup()
+plotting.setup()
+
+sm = plotting.SubplotsManager((1, 4))
+
+for trajectory_fragment in range(4):
+  frame_values = ...
+
+  ax = sm.next()
+  ax.hist(frame_values)
+  ax.set_title(f"Histogram of intensity values of {trajectory_fragment}")
+  ax.set_xlabel("Intensity")
+  ax.set_ylabel("Frequency")
+
+sm.show()
 ```
 
 ### Transforms
@@ -33,7 +46,7 @@ log_scaled_x = transforms.log_scale(x)
 `pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](LICENSE) file.
 
 ## TODO
-[] - Tests for plotting module
-[] - Write usage for plotting functions
-[] - Update usage for transforms in case of dataframes
-[] - New release
+- [ ] Tests for plotting module
+- [ ] Write usage for plotting functions
+- [ ] Update usage for transforms in case of dataframes
+- [ ] New release
