@@ -50,3 +50,5 @@ log_scaled_x = transforms.log_scale(x)
 - [ ] Write usage for plotting functions
 - [ ] Update usage for transforms in case of dataframes
 - [ ] New release
+- [ ] Change transforms module to not change dtype of input vectors
+- [ ] Write docstrings
