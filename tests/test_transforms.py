@@ -1,6 +1,7 @@
 import numpy as np
 import pytest
-from pykirill.transforms import scale, log_scale
+
+from pykirill.transforms import log_scale, scale
 
 
 class TestScale:

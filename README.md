@@ -37,8 +37,12 @@ axm.show()
 ```python
 from pykirill import transforms
 
+# For NumPy arrays
 x = np.array([1, 2, 3, 4], dtype=np.float32)
 log_scaled_x = transforms.log_scale(x)
+
+# For Pandas DataFrames
+scaled_df = df.apply(transforms.scale, engine='numba', raw=True, engine_kwargs={'parallel': True})
 ```
 
 ## License
@@ -47,8 +51,9 @@ log_scaled_x = transforms.log_scale(x)
 
 ## TODO
 - [x] Tests for plotting module
-- [ ] Write usage for plotting functions
-- [ ] Update usage for transforms in case of dataframes
+- [x] Write usage for plotting functions
+- [x] Update usage for transforms in case of dataframes
+- [x] Change transforms module to not change dtype of input vectors
+- [x] Write docstrings
+- [ ] Create fun cli displaying version
 - [ ] New release
-- [ ] Change transforms module to not change dtype of input vectors
-- [ ] Write docstrings
