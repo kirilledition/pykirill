@@ -55,5 +55,5 @@ scaled_df = df.apply(transforms.scale, engine='numba', raw=True, engine_kwargs={
 - [x] Update usage for transforms in case of dataframes
 - [x] Change transforms module to not change dtype of input vectors
 - [x] Write docstrings
-- [ ] Create fun cli displaying version
+- [x] Create fun cli displaying version
 - [ ] New release

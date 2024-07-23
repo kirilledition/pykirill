@@ -6,6 +6,7 @@ import matplotlib.font_manager
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
+from numpy import typing as npt
 
 from . import moods
 
@@ -109,7 +110,7 @@ class SubplotsManager:
         self.n_plots: int
 
         self.figure: plt.Figure
-        self.axes: np.ndarray[plt.Axes]
+        self.axes: npt.NDArray[typing.Any]
 
         self.n_rows, self.n_columns, self.n_plots = self.calculate_dimensions(dimensions)
 
@@ -121,7 +122,7 @@ class SubplotsManager:
         else:
             self.figure_size = figure_size
 
-        self.figure, self.axes = self.create_subplots(self.n_rows, self.n_columns, self.n_plots, self.figure_size)
+        self.figure, self.axes = self.create_subplots(self.n_rows, self.n_columns, self.figure_size)
         self.current_iteration_index: int = 0
 
     def calculate_dimensions(self, dimensions: int | tuple[int, int]) -> tuple[int, int, int]:
@@ -150,8 +151,8 @@ class SubplotsManager:
         raise ValueError("Dimensions must be int or tuple")
 
     def create_subplots(
-        self, n_rows: int, n_columns: int, n_plots: int, figure_size: tuple[int, int]
-    ) -> tuple[plt.Figure, np.ndarray[plt.Axes]]:
+        self, n_rows: int, n_columns: int, figure_size: tuple[int, int]
+    ) -> tuple[plt.Figure, npt.NDArray[typing.Any]]:
         """
         Creates the subplots and returns the figure and axes array.
 
@@ -165,7 +166,11 @@ class SubplotsManager:
             tuple[plt.Figure, np.ndarray[plt.Axes]]: The figure and axes array.
         """
         fig, axes = plt.subplots(n_rows, n_columns, figsize=figure_size)
-        axes = axes.flatten() if n_plots > 1 else np.array([axes])
+        # axes = axes.flatten() if n_plots > 1 else np.array([axes])
+        if isinstance(axes, np.ndarray):
+            axes = axes.flatten()
+        else:
+            axes = np.array([axes])
         return fig, axes
 
     def show(self) -> None:
