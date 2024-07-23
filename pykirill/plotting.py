@@ -7,6 +7,8 @@ import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
 
+from . import moods
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -55,6 +57,8 @@ def setup() -> None:
 
     ipython.run_line_magic("matplotlib", "inline")
     ipython.run_line_magic("config", "InlineBackend.figure_format = 'retina'")
+
+    logger.info(moods.generate_notebook_string())
 
 
 class SubplotsManager:
