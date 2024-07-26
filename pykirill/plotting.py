@@ -1,51 +1,65 @@
-import seaborn as sns
-from matplotlib import pyplot as plt
-import matplotlib.font_manager
 import logging
 import math
 import typing
-import numpy as np
 
+import matplotlib.font_manager
+import numpy as np
+import seaborn as sns
+from matplotlib import pyplot as plt
+from numpy import typing as npt
+
+from . import moods
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 def setup() -> None:
+    """
+    Configures the default settings for Seaborn and Matplotlib, including theme, style, color palette,
+    font settings, and IPython-specific configurations if available.
+
+    - Sets the Seaborn theme to 'notebook' context with 'whitegrid' style and 'colorblind' palette.
+    - Sets Matplotlib's default colormap to 'viridis' and enables figure autolayout.
+    - Attempts to set the default font to Arial if available; otherwise defaults to sans-serif.
+    - Configures IPython to use inline plotting and retina display if IPython is present and running.
+
+    Returns:
+        None
+    """
+
     sns.set_theme(context="notebook", style="whitegrid", palette="colorblind")
     plt.rcParams["image.cmap"] = "viridis"
-    plt.rcParams['figure.autolayout'] = True
+    plt.rcParams["figure.autolayout"] = True
 
     arial_available = False
     for font in matplotlib.font_manager.fontManager.ttflist:
-        if 'Arial' in font.name:
+        if "Arial" in font.name:
             arial_available = True
             break
 
     if arial_available:
         plt.rcParams["font.family"] = "Arial"
-        logger.info(
-            "Arial font is available and has been set as the default font.")
+        logger.info("Arial font is available and has been set as the default font.")
     else:
         plt.rcParams["font.family"] = "sans-serif"
-        logger.info(
-            "Arial font is not available. Defaulting to sans-serif font.")
+        logger.info("Arial font is not available. Defaulting to sans-serif font.")
 
     try:
         import IPython
     except ImportError:
-        logger.warning(
-            "IPython is not installed, IPython-specific configurations are skipped.")
+        logger.info("IPython is not installed, IPython-specific configurations are skipped.")
         return
 
     ipython = IPython.get_ipython()
     if not ipython:
-        logger.info(
-            "Not running in an IPython environment. IPython-specific configurations are skipped.")
+        logger.info("Not running in an IPython environment. IPython-specific configurations are skipped.")
         return
 
     ipython.run_line_magic("matplotlib", "inline")
     ipython.run_line_magic("config", "InlineBackend.figure_format = 'retina'")
+
+    logger.info(moods.generate_notebook_string())
 
 
 class SubplotsManager:
@@ -55,29 +69,63 @@ class SubplotsManager:
     Attributes:
         ROWS_SCALING_FACTOR (int): Scaling factor for the height of each row.
         COLUMNS_SCALING_FACTOR (int): Scaling factor for the width of each column.
+        MAXIMUM_DIMENSIONS_IN_ONE_ROW (int): Maximum number of subplots in one row.
         figure (plt.Figure): The Matplotlib figure containing the subplots.
         axes (np.ndarray[plt.Axes]): Array of Matplotlib Axes objects representing the subplots.
         n_plots (int): The total number of subplots.
         current_iteration_index (int): The index of the next subplot to be accessed.
+
+    Usage:
+
+        from pykirill import plotting
+
+        axm = plotting.SubplotsManager(4)
+
+        for trajectory_fragment in range(4):
+        frame_values = ...
+
+        ax = axm.nextax()
+        ax.hist(frame_values)
+        ax.set_title(f"Histogram of intensity values of {trajectory_fragment}")
+        ax.set_xlabel("Intensity")
+        ax.set_ylabel("Frequency")
+
+        axm.show()
     """
 
     ROWS_SCALING_FACTOR: int = 5
     COLUMNS_SCALING_FACTOR: int = 6
+    MAXIMUM_DIMENSIONS_IN_ONE_ROW: int = 5
 
-    def __init__(self, dimensions: int | tuple[int, int]) -> None:
+    def __init__(self, dimensions: int | tuple[int, int], figure_size: typing.Optional[tuple[int, int]] = None) -> None:
         """
-        Initializes the SubplotsManager with the given dimensions.
+        Initializes the SubplotsManager with the given dimensions and optional figure size.
 
         Args:
             dimensions (int | tuple[int, int]): The number of subplots or a tuple specifying (rows, columns).
+            figure_size (tuple[int, int], optional): The size of the figure (width, height). Defaults to None.
         """
-        self.figure: plt.Figure
-        self.axes: np.ndarray[plt.Axes]
+        self.n_rows: int
+        self.n_columns: int
         self.n_plots: int
-        self.figure, self.axes, self.n_plots = self.create_subplots(dimensions)
+
+        self.figure: plt.Figure
+        self.axes: npt.NDArray[typing.Any]
+
+        self.n_rows, self.n_columns, self.n_plots = self.calculate_dimensions(dimensions)
+
+        if figure_size is None:
+            self.figure_size = (
+                self.COLUMNS_SCALING_FACTOR * self.n_columns,
+                self.ROWS_SCALING_FACTOR * self.n_rows,
+            )
+        else:
+            self.figure_size = figure_size
+
+        self.figure, self.axes = self.create_subplots(self.n_rows, self.n_columns, self.figure_size)
         self.current_iteration_index: int = 0
 
-    def calculate_dimensions(self, dimensions: int | tuple[int, int]) -> tuple[int, int]:
+    def calculate_dimensions(self, dimensions: int | tuple[int, int]) -> tuple[int, int, int]:
         """
         Calculates the number of rows and columns for the subplots based on the given dimensions.
 
@@ -85,54 +133,53 @@ class SubplotsManager:
             dimensions (int | tuple[int, int]): The number of subplots or a tuple specifying (rows, columns).
 
         Returns:
-            tuple[int, int]: The number of rows and columns.
+            tuple[int, int, int]: The number of rows, columns, and total number of plots.
         """
         if isinstance(dimensions, tuple):
             n_rows, n_columns = dimensions
-            return n_rows, n_columns
+            n_plots = n_rows * n_columns
+            return n_rows, n_columns, n_plots
 
         if isinstance(dimensions, int):
+            if dimensions <= self.MAXIMUM_DIMENSIONS_IN_ONE_ROW:
+                return 1, dimensions, dimensions
+
             n_columns = math.ceil(math.sqrt(dimensions))
             n_rows = math.ceil(dimensions / n_columns)
-            return n_rows, n_columns
+            return n_rows, n_columns, dimensions
 
         raise ValueError("Dimensions must be int or tuple")
 
-    def create_subplots(self, dimensions: int | tuple[int, int]) -> tuple[plt.Figure, np.ndarray[plt.Axes], int]:
+    def create_subplots(
+        self, n_rows: int, n_columns: int, figure_size: tuple[int, int]
+    ) -> tuple[plt.Figure, npt.NDArray[typing.Any]]:
         """
-        Creates the subplots and returns the figure, axes array, and the total number of plots.
+        Creates the subplots and returns the figure and axes array.
 
         Args:
-            dimensions (int | tuple[int, int]): The number of subplots or a tuple specifying (rows, columns).
+            n_rows (int): The number of rows of subplots.
+            n_columns (int): The number of columns of subplots.
+            n_plots (int): The total number of subplots.
+            figure_size (tuple[int, int]): The size of the figure (width, height).
 
         Returns:
-            tuple[plt.Figure, np.ndarray[plt.Axes], int]: The figure, axes array, and the total number of plots.
+            tuple[plt.Figure, np.ndarray[plt.Axes]]: The figure and axes array.
         """
-        n_rows, n_columns = self.calculate_dimensions(dimensions)
-        n_plots = n_rows * n_columns
-
-        figure_size = (
-            self.COLUMNS_SCALING_FACTOR * n_columns,
-            self.ROWS_SCALING_FACTOR * n_rows
-        )
-
-        fig, axes = plt.subplots(
-            n_rows,
-            n_columns,
-            figsize=figure_size
-        )
-
-        axes = axes.flatten() if n_plots > 1 else np.array([axes])
-        return fig, axes, n_plots
+        fig, axes = plt.subplots(n_rows, n_columns, figsize=figure_size)
+        if isinstance(axes, np.ndarray):
+            axes = axes.flatten()
+        else:
+            axes = np.array([axes])
+        return fig, axes
 
     def show(self) -> None:
         """
         Displays the figure with a tight layout.
         """
         self.figure.tight_layout()
-        self.figure.show()
+        plt.show()
 
-    def next(self) -> plt.Axes:
+    def nextax(self) -> plt.Axes:
         """
         Returns the next available subplot Axes object.
 
@@ -146,7 +193,7 @@ class SubplotsManager:
             ax = self.axes[self.current_iteration_index]
             self.current_iteration_index += 1
             return ax
-        raise IndexError("No more subplots available")
+        logger.warning("No more subplots available")
 
     def __getitem__(self, idx: int) -> plt.Axes:
         """
@@ -170,12 +217,12 @@ class SubplotsManager:
         Returns an iterator over the subplot Axes objects.
 
         Returns:
-            iter[plt.Axes]: An iterator over the subplot Axes objects.
+            typing.Iterator[plt.Axes]: An iterator over the subplot Axes objects.
         """
         return iter(self.axes)
 
 
-def image_show(image, ax=None, cmap='gray', show_grid=False, hide_ticks=True, **kwargs):
+def image_show(image, ax=None, cmap="gray", show_grid=False, hide_ticks=True, **kwargs):
     """
     Displays an image on the given Matplotlib Axes.
 
@@ -199,7 +246,6 @@ def image_show(image, ax=None, cmap='gray', show_grid=False, hide_ticks=True, **
         ax.grid(False)
 
     if hide_ticks:
-        ax.tick_params(axis='both', which='both', bottom=False,
-                       left=False, labelbottom=False, labelleft=False)
+        ax.tick_params(axis="both", which="both", bottom=False, left=False, labelbottom=False, labelleft=False)
 
     return ax
