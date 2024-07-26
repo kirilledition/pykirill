@@ -114,11 +114,13 @@ class TestSubplotsManager:
 
     def test_nextax_method(self):
         manager = SubplotsManager(4, None)
-        for i in range(4):
+        for _ in range(4):
             ax = manager.nextax()
             assert isinstance(ax, plt.Axes)
-        with pytest.raises(IndexError):
+
+        with unittest.mock.patch("logging.Logger.warning") as mock_warning:
             manager.nextax()
+            mock_warning.assert_any_call("No more subplots available")
 
     def test_getitem_method(self):
         manager = SubplotsManager(4, None)

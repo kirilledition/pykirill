@@ -166,7 +166,6 @@ class SubplotsManager:
             tuple[plt.Figure, np.ndarray[plt.Axes]]: The figure and axes array.
         """
         fig, axes = plt.subplots(n_rows, n_columns, figsize=figure_size)
-        # axes = axes.flatten() if n_plots > 1 else np.array([axes])
         if isinstance(axes, np.ndarray):
             axes = axes.flatten()
         else:
@@ -194,7 +193,7 @@ class SubplotsManager:
             ax = self.axes[self.current_iteration_index]
             self.current_iteration_index += 1
             return ax
-        raise IndexError("No more subplots available")
+        logger.warning("No more subplots available")
 
     def __getitem__(self, idx: int) -> plt.Axes:
         """
