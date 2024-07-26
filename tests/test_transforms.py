@@ -1,31 +1,7 @@
 import numpy as np
 import pytest
 
-from pykirill.transforms import log_scale, scale
-
-
-class TestScale:
-    def test_normal_case(self):
-        # A typical case
-        x = np.array([1, 2, 3, 4], dtype=np.float32)
-        scaled_x = scale(x)
-
-        expected = np.array([-1.3416407, -0.4472136, 0.4472136, 1.3416407], dtype=np.float32)
-        np.testing.assert_array_almost_equal(scaled_x, expected, err_msg="Incorrect result")
-
-        np.testing.assert_array_almost_equal(scaled_x.mean(), 0.0, err_msg="Mean is not zero")
-        np.testing.assert_array_almost_equal(scaled_x.std(), 1.0, err_msg="Standard deviation is not one")
-
-    def test_with_nan(self):
-        # Include NaN values in the input
-        x = np.array([np.nan, 1, 2, 3, 4], dtype=np.float32)
-        scaled_x = scale(x)
-
-        expected = np.array([np.nan, -1.3416407, -0.4472136, 0.4472136, 1.3416407], dtype=np.float32)
-        np.testing.assert_array_almost_equal(scaled_x, expected, err_msg="Incorrect result")
-
-        np.testing.assert_array_almost_equal(np.nanmean(scaled_x), 0.0, err_msg="Mean is not zero")
-        np.testing.assert_array_almost_equal(np.nanstd(scaled_x), 1.0, err_msg="Standard deviation is not one")
+from pykirill.transforms import log_scale
 
 
 class TestLogScale:

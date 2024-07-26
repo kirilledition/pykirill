@@ -42,7 +42,7 @@ x = np.array([1, 2, 3, 4], dtype=np.float32)
 log_scaled_x = transforms.log_scale(x)
 
 # For Pandas DataFrames
-scaled_df = df.apply(transforms.scale, engine='numba', raw=True, engine_kwargs={'parallel': True})
+log_scaled_df = df.apply(transforms.log_scale)
 ```
 
 ## License
