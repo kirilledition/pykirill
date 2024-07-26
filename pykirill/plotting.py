@@ -142,7 +142,7 @@ class SubplotsManager:
 
         if isinstance(dimensions, int):
             if dimensions <= self.MAXIMUM_DIMENSIONS_IN_ONE_ROW:
-                return dimensions, 1, dimensions
+                return 1, dimensions, dimensions
 
             n_columns = math.ceil(math.sqrt(dimensions))
             n_rows = math.ceil(dimensions / n_columns)

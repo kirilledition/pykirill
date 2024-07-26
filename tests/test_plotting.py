@@ -136,9 +136,10 @@ class TestSubplotsManager:
         assert all(isinstance(ax, plt.Axes) for ax in axes)
 
     def test_maximum_dimensions_in_one_row(self):
-        manager = SubplotsManager(5, None)
-        assert manager.n_rows == 5
-        assert manager.n_columns == 1
+        maximum_dimensions = SubplotsManager.MAXIMUM_DIMENSIONS_IN_ONE_ROW
+        manager = SubplotsManager(maximum_dimensions, None)
+        assert manager.n_rows == 1
+        assert manager.n_columns == maximum_dimensions
 
     def test_invalid_dimensions(self):
         with pytest.raises(ValueError):
