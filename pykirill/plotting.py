@@ -178,7 +178,7 @@ class SubplotsManager:
         Displays the figure with a tight layout.
         """
         self.figure.tight_layout()
-        self.figure.show()
+        plt.show()
 
     def nextax(self) -> plt.Axes:
         """

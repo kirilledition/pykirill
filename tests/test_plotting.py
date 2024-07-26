@@ -108,7 +108,7 @@ class TestSubplotsManager:
 
     def test_show_method(self):
         manager = SubplotsManager(4, None)
-        with unittest.mock.patch.object(manager.figure, "show") as mock_show:
+        with unittest.mock.patch.object(plt, "show") as mock_show:
             manager.show()
             mock_show.assert_called_once()
 
