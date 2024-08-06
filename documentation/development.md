@@ -5,7 +5,7 @@
 This is current development workflow to ensure code quality. In future should be automated with make, tox or nox
 
 ```bash
-pip install .
+pip install .[development]
 ruff format --check
 ruff format
 ruff check
@@ -29,23 +29,15 @@ The major version corresponds to the current calendar year. This allows users to
 
 **Minor Version:**
 The minor version is incremented when:
+
 - New functionality is introduced, enhancing the capabilities of `pykirill`.
 - A deprecated option or feature is removed, ensuring the codebase remains clean and up-to-date.
 
 **Patch Version:**
 The patch version is incremented for:
+
 - Bug fixes, including behavior changes that resolve issues.
 - Small changes that do not introduce new functionality but improve stability or performance.
-
-### Versioning Scheme in Practice
-
-For example, a version `2024.1.0` indicates:
-- `2024`: The release was made in the year 2024.
-- `1`: This is the first minor update of the year, introducing new features or removing deprecated features.
-- `0`: There have been no patch updates for this minor version yet.
-
-A subsequent bug fix would update the version to `2024.1.1`, indicating the first patch for the first minor release of 2024.
-
 
 ## 🚀 Releasing
 

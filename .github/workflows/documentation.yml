@@ -19,5 +19,5 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install .[docs]
+      - run: pip install .[documentation]
       - run: mkdocs gh-deploy --force

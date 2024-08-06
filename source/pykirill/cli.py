@@ -1,3 +1,7 @@
+"""
+Module contains the main function for the CLI interface of the package.
+"""
+
 from . import moods
 from .version import VERSION
 

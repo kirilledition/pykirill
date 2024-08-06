@@ -1,3 +1,7 @@
+"""
+Module for generating random moods and formatted output strings for the CLI and notebooks
+"""
+
 import random
 
 MOODS = [

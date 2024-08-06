@@ -1,3 +1,7 @@
+"""
+Data transformation functions
+"""
+
 import numpy as np
 import scipy.stats
 from numpy import typing as npt

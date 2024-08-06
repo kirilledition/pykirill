@@ -1,3 +1,7 @@
+"""
+Plotting utility functions
+"""
+
 import logging
 import math
 import typing
