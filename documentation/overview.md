@@ -46,7 +46,3 @@ log_scaled_x = transforms.log_scale(x)
 # For Pandas DataFrames
 log_scaled_df = df.apply(transforms.log_scale)
 ```
-
-## License
-
-`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](LICENSE) file.

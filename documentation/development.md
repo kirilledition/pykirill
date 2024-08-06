@@ -5,11 +5,11 @@
 This is current development workflow to ensure code quality. In future should be automated with make, tox or nox
 
 ```bash
-pip install .[development]
+pip install ".[development]"
 ruff format --check
 ruff format
 ruff check
-mypy src
+mypy source
 pytest .
 python -m build --wheel
 ```

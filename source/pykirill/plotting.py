@@ -27,9 +27,6 @@ def setup() -> None:
     - Sets Matplotlib's default colormap to 'viridis' and enables figure autolayout.
     - Attempts to set the default font to Arial if available; otherwise defaults to sans-serif.
     - Configures IPython to use inline plotting and retina display if IPython is present and running.
-
-    Returns:
-        None
     """
 
     sns.set_theme(context="notebook", style="whitegrid", palette="colorblind")
@@ -71,18 +68,19 @@ class SubplotsManager:
     Manages the creation and iteration of subplots in a Matplotlib figure.
 
     Attributes:
-        ROWS_SCALING_FACTOR (int): Scaling factor for the height of each row.
-        COLUMNS_SCALING_FACTOR (int): Scaling factor for the width of each column.
-        MAXIMUM_DIMENSIONS_IN_ONE_ROW (int): Maximum number of subplots in one row.
-        figure (plt.Figure): The Matplotlib figure containing the subplots.
-        axes (np.ndarray[plt.Axes]): Array of Matplotlib Axes objects representing the subplots.
-        n_plots (int): The total number of subplots.
-        current_iteration_index (int): The index of the next subplot to be accessed.
+        ROWS_SCALING_FACTOR: Scaling factor for the height of each row.
+        COLUMNS_SCALING_FACTOR: Scaling factor for the width of each column.
+        MAXIMUM_DIMENSIONS_IN_ONE_ROW: Maximum number of subplots in one row.
+        figure: The Matplotlib figure containing the subplots.
+        axes: Array of Matplotlib Axes objects representing the subplots.
+        n_plots: The total number of subplots.
+        n_rows: The number of rows of subplots.
+        n_columns: The number of columns of subplots.
+        figure_size: The size of the figure (width, height).
+        current_iteration_index The index of the next subplot to be accessed.
 
     Usage:
         ```python
-        from pykirill import plotting
-
         axm = plotting.SubplotsManager(4)
 
         for trajectory_fragment in range(4):
@@ -107,9 +105,10 @@ class SubplotsManager:
         Initializes the SubplotsManager with the given dimensions and optional figure size.
 
         Args:
-            dimensions (int | tuple[int, int]): The number of subplots or a tuple specifying (rows, columns).
-            figure_size (tuple[int, int], optional): The size of the figure (width, height). Defaults to None.
+            dimensions: The number of subplots or a tuple specifying (rows, columns).
+            figure_size: The size of the figure (width, height). Defaults to None.
         """
+
         self.n_rows: int
         self.n_columns: int
         self.n_plots: int
@@ -135,11 +134,12 @@ class SubplotsManager:
         Calculates the number of rows and columns for the subplots based on the given dimensions.
 
         Args:
-            dimensions (int | tuple[int, int]): The number of subplots or a tuple specifying (rows, columns).
+            dimensions: The number of subplots or a tuple specifying (rows, columns).
 
         Returns:
-            tuple[int, int, int]: The number of rows, columns, and total number of plots.
+            The number of rows, columns, and total number of plots.
         """
+
         if isinstance(dimensions, tuple):
             n_rows, n_columns = dimensions
             n_plots = n_rows * n_columns
@@ -162,14 +162,15 @@ class SubplotsManager:
         Creates the subplots and returns the figure and axes array.
 
         Args:
-            n_rows (int): The number of rows of subplots.
-            n_columns (int): The number of columns of subplots.
-            n_plots (int): The total number of subplots.
-            figure_size (tuple[int, int]): The size of the figure (width, height).
+            n_rows: The number of rows of subplots.
+            n_columns: The number of columns of subplots.
+            n_plots: The total number of subplots.
+            figure_size: The size of the figure (width, height).
 
         Returns:
-            tuple[plt.Figure, np.ndarray[plt.Axes]]: The figure and axes array.
+            The figure and axes array.
         """
+
         fig, axes = plt.subplots(n_rows, n_columns, figsize=figure_size)
         if isinstance(axes, np.ndarray):
             axes = axes.flatten()
@@ -181,40 +182,45 @@ class SubplotsManager:
         """
         Displays the figure with a tight layout.
         """
+
         self.figure.tight_layout()
         plt.show()
 
-    def nextax(self) -> plt.Axes:
+    def nextax(self) -> typing.Optional[plt.Axes]:
         """
         Returns the next available subplot Axes object.
 
         Returns:
-            plt.Axes: The next available subplot Axes object.
+            The next available subplot Axes object.
 
         Raises:
             IndexError: If no more subplots are available.
         """
+
         if self.current_iteration_index < self.n_plots:
             ax = self.axes[self.current_iteration_index]
             self.current_iteration_index += 1
             return ax
         logger.warning("No more subplots available")
+        return None
 
-    def __getitem__(self, idx: int) -> plt.Axes:
+    def __getitem__(self, index: int) -> plt.Axes:
         """
         Returns the subplot Axes object at the given index.
 
         Args:
-            idx (int): The index of the subplot Axes object to return.
+            index: The index of the subplot Axes object to return.
 
         Returns:
-            plt.Axes: The subplot Axes object at the given index.
+            The subplot Axes object at the given index.
 
         Raises:
             IndexError: If the index is out of range.
         """
-        if idx < self.n_plots:
-            return self.axes[idx]
+
+        if index < self.n_plots:
+            return self.axes[index]
+
         raise IndexError("Index out of range")
 
     def __iter__(self) -> typing.Iterator[plt.Axes]:
@@ -222,26 +228,34 @@ class SubplotsManager:
         Returns an iterator over the subplot Axes objects.
 
         Returns:
-            typing.Iterator[plt.Axes]: An iterator over the subplot Axes objects.
+            An iterator over the subplot Axes objects.
         """
         return iter(self.axes)
 
 
-def image_show(image, ax=None, cmap="gray", show_grid=False, hide_ticks=True, **kwargs):
+def image_show(
+    image: np.ndarray,
+    ax: typing.Optional[plt.Axes] = None,
+    cmap: str = "gray",
+    show_grid: bool = False,
+    hide_ticks: bool = True,
+    **kwargs,
+) -> plt.Axes:
     """
     Displays an image on the given Matplotlib Axes.
 
     Parameters:
-        image (ndarray): The image to display.
-        ax (matplotlib.axes.Axes, optional): The Axes on which to display the image. If None, uses the current Axes.
-        cmap (str, optional): The colormap to use. Default is 'gray'.
-        show_grid (bool, optional): Whether to display a grid. Default is False.
-        hide_ticks (bool, optional): Whether to hide axis ticks and labels. Default is True.
+        image: The image to display.
+        ax: The Axes on which to display the image. If None, uses the current Axes.
+        cmap: The colormap to use. Default is 'gray'.
+        show_grid: Whether to display a grid. Default is False.
+        hide_ticks: Whether to hide axis ticks and labels. Default is True.
         **kwargs: Additional keyword arguments to pass to ax.imshow().
 
     Returns:
-        matplotlib.axes.Axes: The Axes with the displayed image.
+        The Axes with the displayed image.
     """
+
     if ax is None:
         ax = plt.gca()
 
