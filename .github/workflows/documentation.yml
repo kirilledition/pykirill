@@ -20,4 +20,4 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - run: pip install .[documentation]
-      - run: mkdocs gh-deploy --theme material --force --verbose
+      - run: mkdocs gh-deploy --force --verbose
