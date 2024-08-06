@@ -18,7 +18,8 @@ development = ["pytest", "ruff", "mypy", "ipython", "build"]
 documentation = ["mkdocs", "mkdocs-material", "mkdocstrings[python]"]
 
 [project.urls]
-Homepage = "https://github.com/kirilledition/pykirill"
+Homepage = "https://kirilledition.github.io/pykirill/"
+Documentation = "https://kirilledition.github.io/pykirill/"
 Repository = "https://github.com/kirilledition/pykirill"
 
 [project.scripts]
