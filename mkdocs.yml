@@ -1,4 +1,12 @@
 site_name: pykirill
+docs_dir: docs
+
+nav:
+  - overview.md
+  - api.md
+  - development.md
+  - why.md
+
 theme:
   name: material
   logo: assets/boar_emoji.png

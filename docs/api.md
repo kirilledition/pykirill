@@ -1,3 +1,3 @@
-# API reference
+# 📚 API reference
 
 ::: pykirill

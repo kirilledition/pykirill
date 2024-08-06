@@ -23,11 +23,17 @@ Repository = "https://github.com/kirilledition/pykirill"
 [project.scripts]
 pykirill = "pykirill:cli.main"
 
+[tool.setuptools]
+package-dir = { "" = "src" }
+packages = { find = { where = ["src"] } }
+include-package-data = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests", "pykirill"]
 
 [tool.mypy]
-files = ["pykirill", "tests"]
+python_version = "3.12"
+files = ["src/pykirill", "tests"]
 ignore_missing_imports = true
 
 [tool.ruff]
