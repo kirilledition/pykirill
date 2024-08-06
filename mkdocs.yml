@@ -1,0 +1,59 @@
+site_name: pykirill
+theme:
+  name: material
+  logo: assets/boar_emoji.png
+  favicon: assets/boar_emoji.png
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: en
+  palette:
+    primary: deep purple
+    accent: deep orange
+
+repo_url: https://github.com/kirilledition/pykirill
+repo_name: pykirill
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          show_submodules: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.highlight
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/kirilledition
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/kirilledition
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/kirilldenisov
+
+copyright: |
+  <p> &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/kirilledition"  target="_blank" rel="noopener">Kirill Denisov</a></p>
