@@ -1,8 +1,8 @@
 site_name: pykirill
-docs_dir: docs
+docs_dir: documentation
 
 nav:
-  - overview.md
+  - index.md
   - api.md
   - development.md
   - why.md

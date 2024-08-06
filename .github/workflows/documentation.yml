@@ -2,9 +2,9 @@ name: Publish documentation
 on:
   push:
     branches:
-      - documentation
+      - main
     paths:
-      - docs
+      - documentation
 permissions:
   contents: write
 jobs:
@@ -19,5 +19,5 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install mkdocs-material
+      - run: pip install .[docs]
       - run: mkdocs gh-deploy --force
