@@ -1,4 +1,5 @@
 # Overview
+
 This is my personal Python package, `pykirill`, which includes a collection of utilities and functions that I frequently use during scientific exploration. This package is especially designed to be portable, making it suitable for environments like Google Colab where setup needs to be minimal.
 
 ## Installation
@@ -7,6 +8,7 @@ To install `pykirill`, you can use pip directly from GitHub. This method ensures
 
 ```bash
 pip install git+https://github.com/kirilledition/pykirill.git
+pip install https://github.com/kirilledition/pykirill/releases/download/2024.0.7/pykirill-2024.0.7-py3-none-any.whl
 ```
 
 ## Usage
@@ -48,12 +50,3 @@ log_scaled_df = df.apply(transforms.log_scale)
 ## License
 
 `pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](LICENSE) file.
-
-## TODO
-- [x] Tests for plotting module
-- [x] Write usage for plotting functions
-- [x] Update usage for transforms in case of dataframes
-- [x] Change transforms module to not change dtype of input vectors
-- [x] Write docstrings
-- [x] Create fun cli displaying version
-- [ ] New release

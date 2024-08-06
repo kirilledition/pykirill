@@ -22,11 +22,11 @@ repo_url: https://github.com/kirilledition/pykirill
 repo_name: pykirill
 
 plugins:
-- mkdocstrings:
-    handlers:
-      python:
-        options:
-          show_submodules: true
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_submodules: true
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -43,10 +43,11 @@ markdown_extensions:
   - pymdownx.mark
   - attr_list
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra:
+  generator: false
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/kirilledition

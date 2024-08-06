@@ -76,7 +76,7 @@ class SubplotsManager:
         current_iteration_index (int): The index of the next subplot to be accessed.
 
     Usage:
-
+        ```python
         from pykirill import plotting
 
         axm = plotting.SubplotsManager(4)
@@ -91,6 +91,7 @@ class SubplotsManager:
         ax.set_ylabel("Frequency")
 
         axm.show()
+        ```
     """
 
     ROWS_SCALING_FACTOR: int = 5
