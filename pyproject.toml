@@ -10,7 +10,7 @@ dependencies = ["numpy", "scipy", "matplotlib", "seaborn"]
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 readme = { file = "README.md", content-type = "text/markdown" }
-license = { file = "LICENSE" }
+license = { file = "LICENSE", content-type = "text/plain" }
 classifiers = ["Programming Language :: Python :: 3.12"]
 [project.optional-dependencies]
 dev = ["pytest", "ruff", "mypy", "ipython", "build"]
