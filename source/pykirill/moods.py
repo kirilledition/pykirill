@@ -1,6 +1,10 @@
+"""
+Module for generating random moods and formatted output strings for the CLI and notebooks
+"""
+
 import random
 
-MOODS = [
+MOODS: list[tuple[str, float]] = [
     ("bros.....", 0.05),
     ("WE'RE BACK", 0.2),
     ("WE'RE SO BACK", 0.3),
@@ -16,8 +20,9 @@ def generate_mood() -> str:
     Generate a random mood from the MOODS list with respective probabilities and return it with a randomly colored ANSI escape sequence.
 
     Returns:
-        str: The mood string wrapped in an ANSI escape sequence for color.
+        The mood string wrapped in an ANSI escape sequence for color.
     """
+
     moods, probabilities = zip(*MOODS)
     random_mood = random.choices(moods, weights=probabilities)[0]
 
@@ -37,11 +42,12 @@ def generate_cli_string(version: str) -> str:
     Generate a CLI output string with a version and a randomly colored mood.
 
     Args:
-        version (str): The version string to include in the output.
+        version: The version string to include in the output.
 
     Returns:
-        str: The formatted CLI string with the version and colored mood.
+        The formatted CLI string with the version and colored mood.
     """
+
     mood = generate_mood()
     return f"🐗 pykirill {version} says: {mood}"
 
@@ -51,7 +57,8 @@ def generate_notebook_string() -> str:
     Generate a notebook output string with a randomly colored mood.
 
     Returns:
-        str: The formatted notebook string with the colored mood.
+        The formatted notebook string with the colored mood.
     """
+
     mood = generate_mood()
     return f"Before embarking on a journey, 🐗 pykirill foretells a {mood} mood..."
