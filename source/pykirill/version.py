@@ -1,7 +1,8 @@
 """
-Version of the package.
+Module contains constant with version of the package.
 """
 
 import importlib.metadata
 
-VERSION = importlib.metadata.version("pykirill")
+"""Version of the package"""
+VERSION: str = importlib.metadata.version("pykirill")
