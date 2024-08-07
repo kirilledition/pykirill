@@ -14,7 +14,7 @@ COPY dist /app/
 
 # Upgrade pip and install dependencies
 RUN pip install --upgrade pip && \
-    && pip install /app/dist/*.whl
+    pip install /app/dist/*.whl
 
 # Command to run your package
 CMD ["pykirill"]
