@@ -2,8 +2,11 @@ name: Publish to Test PyPI
 
 on:
   push:
+    branches:
+      - 'main'
     tags:
-      - '*' # This triggers the workflow for any tag
+      - '*'
+
 
 jobs:
   build-and-publish:

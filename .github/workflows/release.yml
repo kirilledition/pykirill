@@ -2,8 +2,11 @@ name: Release Package
 
 on:
   push:
+    branches:
+      - 'main'
     tags:
-      - '*' # This triggers the workflow for any tag
+      - '*'
+
 
 jobs:
   build:
