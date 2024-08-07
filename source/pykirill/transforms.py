@@ -68,6 +68,9 @@ def principal_component_analysis(
     if pca_object is None:
         pca_object = sklearn.decomposition.PCA(n_components=n_components).fit(data)
 
+    if n_components is None:
+        n_components = pca_object.n_components_
+
     scores_array = pca_object.transform(data)
 
     components_names = [f"PC{i}" for i in range(1, n_components + 1)]
