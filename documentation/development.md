@@ -24,7 +24,13 @@ git commit -m "add new feature"
 git push -u origin feature
 ```
 
-Change version on pyproject.toml to YYYY.feature.patch
+Change version on pyproject.toml to YYYY.MINOR.PATCH+feature
+
+Build whl for testing in local environment
+
+```
+python -m build --wheel --outdir /Software/Wheels
+```
 
 ## 🗓️ Versioning
 
