@@ -1,7 +1,9 @@
 name: Publish to PyPI
 
 on:
-  push
+  push:
+    tags:
+      - '*' # This triggers the workflow for any tag
 
 jobs:
   build-and-publish:

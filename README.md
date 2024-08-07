@@ -9,6 +9,7 @@ This is my personal Python package, `pykirill`, which includes a collection of u
 To install `pykirill`, you can use pip directly from GitHub. This method ensures you always get the latest version. Here are the steps to follow:
 
 ```bash
+pip install pykirill
 pip install git+https://github.com/kirilledition/pykirill.git
 ```
 
@@ -51,9 +52,3 @@ log_scaled_df = df.apply(transforms.log_scale)
 ## License
 
 `pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](LICENSE) file.
-
-## TODO
-- [X] Refine docstrings (add formated usage examples, add docstrings to modules, add latex formatting if needed)
-- [ ] Create better overview page (Installation, usage, link to license)
-- [ ] Change license to ensure citation
-- [ ] Add tips and tricks page for better datascience code??

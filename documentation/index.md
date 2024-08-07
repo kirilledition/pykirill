@@ -7,6 +7,7 @@ This is my personal Python package, `pykirill`, which includes a collection of u
 To install `pykirill`, you can use pip directly from GitHub. This method ensures you always get the latest version. Here are the steps to follow:
 
 ```bash
+pip install pykirill
 pip install git+https://github.com/kirilledition/pykirill.git
 pip install https://github.com/kirilledition/pykirill/releases/download/2024.0.7/pykirill-2024.0.7-py3-none-any.whl
 ```
