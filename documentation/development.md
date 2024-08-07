@@ -14,6 +14,18 @@ pytest .
 python -m build --wheel
 ```
 
+## Adding new features
+
+```bash
+git checkout -b feature
+# Add changes
+git add --all
+git commit -m "add new feature"
+git push -u origin feature
+```
+
+Change version on pyproject.toml to YYYY.feature.patch
+
 ## 🗓️ Versioning
 
 `pykirill` uses a custom versioning scheme designed to provide clear and immediate context about the release timeline and the nature of changes included in each release. My versioning scheme follows the format `YYYY.MINOR.PATCH`, where:
