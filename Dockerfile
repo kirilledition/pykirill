@@ -10,10 +10,10 @@ LABEL license="MIT"
 WORKDIR /app
 
 # Copy the package wheel file into the container
-COPY dist /app/dist
+COPY dist /app/
 
 # Upgrade pip and install dependencies
-RUN pip install --upgrade pip \
+RUN pip install --upgrade pip && \
     && pip install /app/dist/*.whl
 
 # Command to run your package
