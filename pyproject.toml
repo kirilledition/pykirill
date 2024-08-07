@@ -11,10 +11,18 @@ authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 readme = { file = "README.md", content-type = "text/markdown" }
 license = { file = "LICENSE", content-type = "text/plain" }
-classifiers = ["Programming Language :: Python :: 3.12"]
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering"
+]
 
 [project.optional-dependencies]
-development = ["pytest", "ruff", "mypy", "ipython", "build"]
+development = ["pytest", "ruff", "mypy", "ipython", "build", "twine"]
 documentation = ["mkdocs", "mkdocs-material", "mkdocstrings[python]"]
 
 [project.urls]
