@@ -18,12 +18,12 @@ classifiers = [
 
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Topic :: Scientific/Engineering"
+    "Topic :: Scientific/Engineering",
 ]
 
 [project.optional-dependencies]
-development = ["pytest", "ruff", "mypy", "ipython", "build", "twine"]
-documentation = ["mkdocs", "mkdocs-material", "mkdocstrings[python]"]
+development = ["pytest", "ruff", "mypy", "ipython", "build"]
+documentation = ["mkdocs-material", "mkdocstrings[python]"]
 
 [project.urls]
 Homepage = "https://kirilledition.github.io/pykirill/"
