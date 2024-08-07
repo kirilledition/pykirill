@@ -48,6 +48,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=sha,enable=false
             type=raw,value=latest
             type=pep440,pattern={{version}}
 

@@ -4,13 +4,39 @@ This is my personal Python package, `pykirill`, which includes a collection of u
 
 ## Installation
 
-To install `pykirill`, you can use pip directly from GitHub. This method ensures you always get the latest version. Here are the steps to follow:
+There are several ways to install `pykirill`
+
+### PyPI
+
+You can use regualar `pip install` from PyPI
 
 ```bash
 pip install pykirill
-pip install git+https://github.com/kirilledition/pykirill.git
-pip install https://github.com/kirilledition/pykirill/releases/download/2024.0.7/pykirill-2024.0.7-py3-none-any.whl
 ```
+
+### GitHub source
+
+You can use pip to install directly from GitHub. This method ensures you always get the latest version. Also gives access to experimental features in development
+
+```bash
+pip install git+https://github.com/kirilledition/pykirill.git@main
+```
+
+### GitHub release
+
+You also can use link to wheel from github releases
+
+```bash
+pip install https://github.com/kirilledition/pykirill/releases/download/2024.0.10/pykirill-2024.0.10-py3-none-any.whl
+```
+
+### GitHub Container Registry
+And finally package is also runnable as docker container from GitHub Container Registry
+
+```bash
+docker run --rm -it ghcr.io/kirilledition/pykirill:2024.0.10
+```
+
 
 ## Usage
 
