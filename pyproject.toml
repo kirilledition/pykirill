@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pykirill"
-version = "2024.0.10"
+description = "🐗 A portable collection of functions for scientific exploration"
+version = "2024.1.0"
 requires-python = ">= 3.10"
 dependencies = ["numpy", "scipy", "matplotlib", "seaborn"]
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
