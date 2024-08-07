@@ -1,5 +1,12 @@
 name: Tests
-on: [push, release]
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'source'
+
 jobs:
   tests:
     runs-on: ubuntu-latest

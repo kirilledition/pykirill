@@ -10,11 +10,11 @@ LABEL license="MIT"
 WORKDIR /app
 
 # Copy the package wheel file into the container
-COPY dist /app/dist
+COPY dist /app
 
 # Upgrade pip and install dependencies
-RUN pip install --upgrade pip \
-    && pip install /app/dist/*.whl
+RUN pip install --upgrade pip && \
+    pip install *.whl
 
 # Command to run your package
 CMD ["pykirill"]
