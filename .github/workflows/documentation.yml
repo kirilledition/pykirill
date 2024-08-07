@@ -3,8 +3,9 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - documentation
+    paths:
+      - documentation
+      
 permissions:
   contents: write
 jobs:
