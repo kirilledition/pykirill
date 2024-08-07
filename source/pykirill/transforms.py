@@ -44,6 +44,18 @@ class PrincipalComponentAnalysisResult(typing.NamedTuple):
     cumulative_explained_variance: pd.Series
     n_components: int
 
+    def __repr__(self):
+        explained_variance = self.cumulative_explained_variance[-1]
+        scores_shape = self.scores.shape
+        loadings_shape = self.loadings.shape
+
+        return f"""{self.__class__.__name__}
+        N components: {self.n_components}
+        Explained variance: {explained_variance:.2f}
+        Scores shape: {scores_shape}
+        Loadings shape: {loadings_shape}
+        """
+
 
 def principal_component_analysis(
     data: pd.DataFrame,
