@@ -14,30 +14,26 @@ pytest .
 python -m build --wheel
 ```
 
+Certainly! Here’s the updated version of your documentation, incorporating the feature versioning part:
+
+---
+
 ## 🗓️ Versioning
 
-`pykirill` uses a custom versioning scheme designed to provide clear and immediate context about the release timeline and the nature of changes included in each release. My versioning scheme follows the format `YYYY.MINOR.PATCH`, where:
+`pykirill` uses a custom versioning scheme designed to provide clear and immediate context about the release timeline and the nature of changes included in each release. The versioning scheme follows the format `YYYY.MINOR.PATCH`, where:
 
-- `YYYY` is the current year, indicating the year of the release.
-- `MINOR` is the minor version number, incremented for new features and significant changes.
-- `PATCH` is the patch version number, incremented for small changes and bug fixes.
+- **`YYYY`**: The current year, indicating the year of the release.
+- **`MINOR`**: The minor version number, incremented for new features and significant changes.
+- **`PATCH`**: The patch version number, incremented for small changes and bug fixes.
 
-### Versioning Rules
+### Feature Branch Versioning
 
-**Major Version (`YYYY`):**
-The major version corresponds to the current calendar year. This allows users to quickly see when the latest features and improvements were introduced. The major version will change at the beginning of each new year.
+When developing new features, a separate feature branch is created. The version of the Python package in this feature branch is based on the current master version, with an additional feature identifier appended. The version format in a feature branch is `YYYY.MINOR.PATCH+FEATURE`.
 
-**Minor Version:**
-The minor version is incremented when:
+For example, if the current version on the master branch is `2024.1.0` and you are working on a feature for Principal Component Analysis (PCA), the version in the feature branch would be `2024.1.0+pca`.
 
-- New functionality is introduced, enhancing the capabilities of `pykirill`.
-- A deprecated option or feature is removed, ensuring the codebase remains clean and up-to-date.
+This versioning approach allows you to distinguish between different package versions during development and testing, ensuring clarity and traceability as features are developed and integrated.
 
-**Patch Version:**
-The patch version is incremented for:
-
-- Bug fixes, including behavior changes that resolve issues.
-- Small changes that do not introduce new functionality but improve stability or performance.
 
 ## 🚀 Releasing
 

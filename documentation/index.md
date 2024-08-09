@@ -27,14 +27,14 @@ pip install git+https://github.com/kirilledition/pykirill.git@main
 You also can use link to wheel from github releases
 
 ```bash
-pip install https://github.com/kirilledition/pykirill/releases/download/2024.0.10/pykirill-2024.0.10-py3-none-any.whl
+pip install https://github.com/kirilledition/pykirill/releases/download/2024.1.0/pykirill-2024.1.0-py3-none-any.whl
 ```
 
 ### GitHub Container Registry
 And finally package is also runnable as docker container from GitHub Container Registry
 
 ```bash
-docker run --rm -it ghcr.io/kirilledition/pykirill:2024.0.10
+docker run --rm -it ghcr.io/kirilledition/pykirill:2024.1.0
 ```
 
 
