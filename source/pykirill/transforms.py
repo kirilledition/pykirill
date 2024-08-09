@@ -87,8 +87,8 @@ if SKLEARN_AVAILABLE:
                 f"{self.__class__.__name__} (\n"
                 f"\tN components: {self.n_components}\n"
                 f"\tExplained variance: {explained_variance:.2f}\n"
-                f"\tScores shape: {scores_shape}, Loadings shape: {loadings_shape})\n"
-                f"\tLoadings shape: {loadings_shape})\n"
+                f"\tScores shape: {scores_shape}\n"
+                f"\tLoadings shape: {loadings_shape}\n"
                 ")"
             )
 
