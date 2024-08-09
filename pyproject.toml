@@ -24,7 +24,7 @@ classifiers = [
 
 [project.optional-dependencies]
 development = ["pytest", "ruff", "mypy", "ipython", "build"]
-documentation = ["mkdocs-material", "mkdocstrings[python]"]
+documentation = ["mkdocs-material", "mkdocstrings[python]", "mkdocs-jupyter"]
 pca = ["scikit-learn"]
 
 [project.urls]

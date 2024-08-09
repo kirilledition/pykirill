@@ -4,8 +4,10 @@ docs_dir: documentation
 nav:
   - index.md
   - api.md
+  - showcase.ipynb
   - development.md
   - why.md
+
 
 theme:
   name: material
@@ -33,6 +35,7 @@ repo_url: https://github.com/kirilledition/pykirill
 repo_name: pykirill
 
 plugins:
+  - mkdocs-jupyter
   - mkdocstrings:
       handlers:
         python:
