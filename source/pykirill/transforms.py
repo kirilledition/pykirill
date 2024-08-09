@@ -38,8 +38,20 @@ def log_scale(x: npt.NDArray) -> npt.NDArray:
 
 
 class PrincipalComponentAnalysisResult(typing.NamedTuple):
-    pca: sklearn.decomposition.PCA  # pca_object
-    scores: pd.DataFrame  # scores
+    """
+    A named tuple to store the results of Principal Component Analysis (PCA).
+
+    Attributes:
+        pca: The PCA object used to perform the analysis.
+        scores: A DataFrame containing the principal component scores for each observation.
+        loadings: A DataFrame containing the loadings for each variable in each principal component.
+        cumulative_explained_variance: A Series containing the cumulative explained variance for each principal component.
+        n_components: The number of principal components used in the analysis.
+        names: A list of names for each principal component.
+    """
+
+    pca: sklearn.decomposition.PCA
+    scores: pd.DataFrame
     loadings: pd.DataFrame
     cumulative_explained_variance: pd.Series
     n_components: int
@@ -66,8 +78,17 @@ def principal_component_analysis(
     pca_object: typing.Optional[sklearn.decomposition.PCA] = None,
 ) -> PrincipalComponentAnalysisResult:
     """
-    Performs PCA on the given data and returns the results in form of typed named tuple object dataframes
+    Performs Principal Component Analysis (PCA) on the given data.
+
+    Args:
+        data: The input data to perform PCA on.
+        n_components: The number of principal components to calculate. If None, all components are calculated.
+        pca_object: An optional pre-fitted PCA object. If None, a new PCA object is created and fitted.
+
+    Returns:
+        A named tuple containing PCA results
     """
+
     if pca_object is None:
         pca_object = sklearn.decomposition.PCA(n_components=n_components).fit(data)
 
