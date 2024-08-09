@@ -58,7 +58,7 @@ class PrincipalComponentAnalysisResult(typing.NamedTuple):
     names: list[str]
 
     def __repr__(self):
-        explained_variance = self.cumulative_explained_variance[-1]
+        explained_variance = self.cumulative_explained_variance.iloc[-1]
         scores_shape = self.scores.shape
         loadings_shape = self.loadings.shape
 
