@@ -63,6 +63,15 @@ def setup() -> None:
     logger.info(moods.generate_notebook_string())
 
 
+class AxesElement(typing.NamedTuple):
+    """
+    Represents a Matplotlib Axes object and its index for iteration in a SubplotsManager
+    """
+
+    ax: plt.Axes
+    index: int
+
+
 class SubplotsManager:
     """
     Manages the creation and iteration of subplots in a Matplotlib figure.
@@ -100,7 +109,9 @@ class SubplotsManager:
     COLUMNS_SCALING_FACTOR: int = 6
     MAXIMUM_DIMENSIONS_IN_ONE_ROW: int = 5
 
-    def __init__(self, dimensions: int | tuple[int, int], figure_size: typing.Optional[tuple[int, int]] = None) -> None:
+    def __init__(
+        self, dimensions: int | tuple[int, int] = 1, figure_size: typing.Optional[tuple[int, int]] = None
+    ) -> None:
         """
         Initializes the SubplotsManager with the given dimensions and optional figure size.
 
@@ -225,12 +236,18 @@ class SubplotsManager:
 
     def __iter__(self) -> typing.Iterator[plt.Axes]:
         """
-        Returns an iterator over the subplot Axes objects.
+        Returns an iterator over the subplot Axes objects, yielding an AxesElement
+        containing the Axes object and its corresponding index.
 
-        Returns:
-            An iterator over the subplot Axes objects.
+        The iterator allows access to each subplot in the order they were created.
+
+        Yields:
+            AxesElement: A named tuple containing:
+                - ax The Matplotlib Axes object for the subplot.
+                - index: The index of the subplot within the axes array.
         """
-        return iter(self.axes)
+        for index, ax in enumerate(self.axes):
+            yield AxesElement(ax=ax, index=index)
 
 
 def image_show(
