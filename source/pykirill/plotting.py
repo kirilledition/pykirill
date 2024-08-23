@@ -27,6 +27,13 @@ def setup() -> None:
     - Sets Matplotlib's default colormap to 'viridis' and enables figure autolayout.
     - Attempts to set the default font to Arial if available; otherwise defaults to sans-serif.
     - Configures IPython to use inline plotting and retina display if IPython is present and running.
+
+    Usage:
+        ```python
+        from pykirill import plotting
+
+        plotting.setup()
+        ```
     """
 
     sns.set_theme(context="notebook", style="whitegrid", palette="colorblind")
@@ -90,16 +97,16 @@ class SubplotsManager:
 
     Usage:
         ```python
-        axm = plotting.SubplotsManager(4)
+        axm = plotting.SubplotsManager(pca.n_components)
 
-        for trajectory_fragment in range(4):
-        frame_values = ...
+        for pc, score in pca.scores.items():
+            ax = axm.nextax()
 
-        ax = axm.nextax()
-        ax.hist(frame_values)
-        ax.set_title(f"Histogram of intensity values of {trajectory_fragment}")
-        ax.set_xlabel("Intensity")
-        ax.set_ylabel("Frequency")
+            ax.set_title(pc)
+            ax.set_ylabel("PC score")
+            ax.set_xlabel("species")
+
+            sns.boxplot(x=target, y=score, ax=ax)
 
         axm.show()
         ```

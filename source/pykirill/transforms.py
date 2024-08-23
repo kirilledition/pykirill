@@ -48,6 +48,16 @@ class PrincipalComponentAnalysisResult(typing.NamedTuple):
         cumulative_explained_variance: A Series containing the cumulative explained variance for each principal component.
         n_components: The number of principal components used in the analysis.
         names: A list of names for each principal component.
+
+    Usage:
+        ```python
+        for pc, loading in pca.loadings.items():
+            plt.hist(loading)
+            plt.title(f"Loadings for {pc}")
+            plt.xlabel("Loading value")
+            plt.ylabel("Frequency")
+            plt.show()
+        ```
     """
 
     pca: sklearn.decomposition.PCA
@@ -87,6 +97,15 @@ def principal_component_analysis(
 
     Returns:
         A named tuple containing PCA results
+
+    Usage:
+        ```python
+        pca = transforms.principal_component_analysis(
+            data, n_components=3
+        )
+        for pc, score in pca.scores.items():
+            print(f"{pc}:\t{score.mean():2g}")
+        ```
     """
 
     if pca_object is None:
