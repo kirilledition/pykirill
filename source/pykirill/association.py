@@ -148,3 +148,16 @@ def pearson_association_study(
     ).sort_values(by=["significant", "statistic"], ascending=[False, False])
 
     return results_df
+
+
+# class LinearRegressionResult(typing.NamedTuple):
+#     pvalues: np.array
+#     coefficients: np.array
+
+
+# def linear(target: pd.Series, features: pd.Series) -> StatisticalResult:
+#     import statsmodels.api as sm
+
+#     model = sm.OLS(endog=target, exog=features).fit()
+#     result = LinearRegressionResult(pvalues=model.pvalues.to_numpy(), coefficients=model.params.to_numpy())
+#     return result
