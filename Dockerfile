@@ -14,6 +14,7 @@ COPY dist /app
 
 # Upgrade pip and install dependencies
 RUN pip install --upgrade pip && \
+    apk add py3-scikit-learn && \
     pip install *.whl
 
 # Command to run your package
