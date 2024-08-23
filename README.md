@@ -75,4 +75,4 @@ axm.show()
 
 ## License
 
-`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](https://github.com/kirilledition/pykirill/blob/main/LICENSE.md) file.
+`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE.md](https://github.com/kirilledition/pykirill/blob/main/LICENSE.md) file.
