@@ -68,8 +68,8 @@ class AxesElement(typing.NamedTuple):
     Represents a Matplotlib Axes object and its index for iteration in a SubplotsManager
     """
 
-    ax: plt.Axes
     index: int
+    ax: plt.Axes
 
 
 class SubplotsManager:
@@ -212,7 +212,7 @@ class SubplotsManager:
             ax = self.axes[self.current_iteration_index]
             self.current_iteration_index += 1
             return ax
-        logger.warning("No more subplots available")
+        logger.warning("No more subplots available, terminate the loop with if ax is None: break")
         return None
 
     def __getitem__(self, index: int) -> plt.Axes:
@@ -247,7 +247,7 @@ class SubplotsManager:
                 - index: The index of the subplot within the axes array.
         """
         for index, ax in enumerate(self.axes):
-            yield AxesElement(ax=ax, index=index)
+            yield AxesElement(index=index, ax=ax)
 
 
 def image_show(
