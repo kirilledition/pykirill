@@ -28,7 +28,7 @@ theme:
     primary: deep purple
     accent: deep orange
   font:
-    text: Montserrat
+    text: Noto Sans
     code: JetBrains Mono
 
 repo_url: https://github.com/kirilledition/pykirill

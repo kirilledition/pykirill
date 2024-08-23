@@ -93,7 +93,7 @@ class SubplotsManager:
         n_rows: The number of rows of subplots.
         n_columns: The number of columns of subplots.
         figure_size: The size of the figure (width, height).
-        current_iteration_index The index of the next subplot to be accessed.
+        current_iteration_index: The index of the next subplot to be accessed.
 
     Usage:
         ```python
@@ -182,7 +182,6 @@ class SubplotsManager:
         Args:
             n_rows: The number of rows of subplots.
             n_columns: The number of columns of subplots.
-            n_plots: The total number of subplots.
             figure_size: The size of the figure (width, height).
 
         Returns:
@@ -263,7 +262,7 @@ def image_show(
     cmap: str = "gray",
     show_grid: bool = False,
     hide_ticks: bool = True,
-    **kwargs,
+    **kwargs: typing.Unpack[typing.Any],
 ) -> plt.Axes:
     """
     Displays an image on the given Matplotlib Axes.
