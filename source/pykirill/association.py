@@ -31,8 +31,8 @@ class StatisticalResult(typing.NamedTuple):
 
     target: str
     feature: str
-    statistic: float
-    pvalue: float
+    statistic: typing.Type[np.floating]
+    pvalue: typing.Type[np.floating]
 
 
 def statistical_result_to_string(result: StatisticalResult) -> str:
@@ -75,7 +75,9 @@ def pearson(target: pd.Series, feature: pd.Series) -> StatisticalResult:
     return StatisticalResult(target=target.name, feature=feature.name, statistic=model.statistic, pvalue=model.pvalue)
 
 
-def pearson_association_study(targets: pd.DataFrame, features: pd.DataFrame, dtype: np.dtype = np.float32):
+def pearson_association_study(
+    targets: pd.DataFrame, features: pd.DataFrame, dtype: typing.Type[np.floating] = np.float32
+) -> pd.DataFrame:
     """
     This function performs a multiple association study using Pearson correlation
 

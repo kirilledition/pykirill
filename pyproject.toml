@@ -53,6 +53,7 @@ include-package-data = true
 testpaths = ["tests", "pykirill"]
 
 [tool.mypy]
+plugins = ["numpy.typing.mypy_plugin"]
 python_version = "3.12"
 files = ["source/pykirill", "tests"]
 ignore_missing_imports = true

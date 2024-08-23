@@ -142,7 +142,7 @@ class TestSubplotsManager:
         for i, element in enumerate(axes_elements):
             assert isinstance(element, AxesElement)  # Check if it's an AxesElement
             assert isinstance(element.ax, plt.Axes)  # Check if the ax is a plt.Axes object
-            assert element.index == i  # Check if the index matches the expected value
+            assert element.idx == i  # Check if the index matches the expected value
 
     def test_maximum_dimensions_in_one_row(self):
         maximum_dimensions = SubplotsManager.MAXIMUM_DIMENSIONS_IN_ONE_ROW
