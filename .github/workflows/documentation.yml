@@ -4,7 +4,8 @@ on:
     branches:
       - main
     paths:
-      - documentation
+      - 'documentation/**'  # Any changes in the documentation folder
+      - 'mkdocs.yml'         # Any changes to the mkdocs.yml file
       
 permissions:
   contents: write
