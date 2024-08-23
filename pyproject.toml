@@ -20,7 +20,7 @@ dependencies = [
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 readme = { file = "README.md", content-type = "text/markdown" }
-license = { file = "LICENSE", content-type = "text/plain" }
+license = { file = "LICENSE.md", content-type = "text/markdown" }
 classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
