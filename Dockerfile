@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.12.4-alpine3.20
+FROM python:3.12.4-slim
 
 # Metadata as labels
 LABEL maintainer="Kirill Denisov <kirill.denisov@gero.ai>"
@@ -14,7 +14,6 @@ COPY dist /app
 
 # Upgrade pip and install dependencies
 RUN pip install --upgrade pip && \
-    apk add py3-scikit-learn && \
     pip install *.whl
 
 # Command to run your package
