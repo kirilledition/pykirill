@@ -5,3 +5,4 @@
         members:
             - plotting
             - transforms
+            - association

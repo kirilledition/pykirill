@@ -16,6 +16,7 @@ dependencies = [
     "seaborn",
     "pandas",
     "scikit-learn",
+    "tqdm",
 ]
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
@@ -34,7 +35,6 @@ classifiers = [
 [project.optional-dependencies]
 development = ["pytest", "ruff", "mypy", "ipython", "build"]
 documentation = ["mkdocs-material", "mkdocstrings[python]", "mkdocs-jupyter"]
-pca = ["scikit-learn"]
 
 [project.urls]
 Homepage = "https://kirilledition.github.io/pykirill/"
