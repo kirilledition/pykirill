@@ -234,7 +234,7 @@ class SubplotsManager:
 
         raise IndexError("Index out of range")
 
-    def __iter__(self) -> typing.Iterator[plt.Axes]:
+    def __iter__(self) -> typing.Iterator[AxesElement]:
         """
         Returns an iterator over the subplot Axes objects, yielding an AxesElement
         containing the Axes object and its corresponding index.
