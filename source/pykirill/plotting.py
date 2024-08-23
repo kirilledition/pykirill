@@ -27,6 +27,13 @@ def setup() -> None:
     - Sets Matplotlib's default colormap to 'viridis' and enables figure autolayout.
     - Attempts to set the default font to Arial if available; otherwise defaults to sans-serif.
     - Configures IPython to use inline plotting and retina display if IPython is present and running.
+
+    Usage:
+        ```python
+        from pykirill import plotting
+
+        plotting.setup()
+        ```
     """
 
     sns.set_theme(context="notebook", style="whitegrid", palette="colorblind")
@@ -63,6 +70,15 @@ def setup() -> None:
     logger.info(moods.generate_notebook_string())
 
 
+class AxesElement(typing.NamedTuple):
+    """
+    Represents a Matplotlib Axes object and its index for iteration in a SubplotsManager
+    """
+
+    index: int
+    ax: plt.Axes
+
+
 class SubplotsManager:
     """
     Manages the creation and iteration of subplots in a Matplotlib figure.
@@ -77,20 +93,20 @@ class SubplotsManager:
         n_rows: The number of rows of subplots.
         n_columns: The number of columns of subplots.
         figure_size: The size of the figure (width, height).
-        current_iteration_index The index of the next subplot to be accessed.
+        current_iteration_index: The index of the next subplot to be accessed.
 
     Usage:
         ```python
-        axm = plotting.SubplotsManager(4)
+        axm = plotting.SubplotsManager(pca.n_components)
 
-        for trajectory_fragment in range(4):
-        frame_values = ...
+        for pc, score in pca.scores.items():
+            ax = axm.nextax()
 
-        ax = axm.nextax()
-        ax.hist(frame_values)
-        ax.set_title(f"Histogram of intensity values of {trajectory_fragment}")
-        ax.set_xlabel("Intensity")
-        ax.set_ylabel("Frequency")
+            ax.set_title(pc)
+            ax.set_ylabel("PC score")
+            ax.set_xlabel("species")
+
+            sns.boxplot(x=target, y=score, ax=ax)
 
         axm.show()
         ```
@@ -100,7 +116,9 @@ class SubplotsManager:
     COLUMNS_SCALING_FACTOR: int = 6
     MAXIMUM_DIMENSIONS_IN_ONE_ROW: int = 5
 
-    def __init__(self, dimensions: int | tuple[int, int], figure_size: typing.Optional[tuple[int, int]] = None) -> None:
+    def __init__(
+        self, dimensions: int | tuple[int, int] = 1, figure_size: typing.Optional[tuple[int, int]] = None
+    ) -> None:
         """
         Initializes the SubplotsManager with the given dimensions and optional figure size.
 
@@ -164,7 +182,6 @@ class SubplotsManager:
         Args:
             n_rows: The number of rows of subplots.
             n_columns: The number of columns of subplots.
-            n_plots: The total number of subplots.
             figure_size: The size of the figure (width, height).
 
         Returns:
@@ -201,7 +218,7 @@ class SubplotsManager:
             ax = self.axes[self.current_iteration_index]
             self.current_iteration_index += 1
             return ax
-        logger.warning("No more subplots available")
+        logger.warning("No more subplots available, terminate the loop with if ax is None: break")
         return None
 
     def __getitem__(self, index: int) -> plt.Axes:
@@ -223,14 +240,20 @@ class SubplotsManager:
 
         raise IndexError("Index out of range")
 
-    def __iter__(self) -> typing.Iterator[plt.Axes]:
+    def __iter__(self) -> typing.Iterator[AxesElement]:
         """
-        Returns an iterator over the subplot Axes objects.
+        Returns an iterator over the subplot Axes objects, yielding an AxesElement
+        containing the Axes object and its corresponding index.
 
-        Returns:
-            An iterator over the subplot Axes objects.
+        The iterator allows access to each subplot in the order they were created.
+
+        Yields:
+            AxesElement: A named tuple containing:
+                - ax The Matplotlib Axes object for the subplot.
+                - index: The index of the subplot within the axes array.
         """
-        return iter(self.axes)
+        for index, ax in enumerate(self.axes):
+            yield AxesElement(index=index, ax=ax)
 
 
 def image_show(
@@ -239,7 +262,7 @@ def image_show(
     cmap: str = "gray",
     show_grid: bool = False,
     hide_ticks: bool = True,
-    **kwargs,
+    **kwargs: typing.Unpack[typing.Any],
 ) -> plt.Axes:
     """
     Displays an image on the given Matplotlib Axes.

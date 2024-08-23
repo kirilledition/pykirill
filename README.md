@@ -6,49 +6,73 @@ This is my personal Python package, `pykirill`, which includes a collection of u
 
 ## Installation
 
-To install `pykirill`, you can use pip directly from GitHub. This method ensures you always get the latest version. Here are the steps to follow:
+There are several ways to install `pykirill`
+
+### PyPI
+
+You can use regualar `pip install` from PyPI
 
 ```bash
 pip install pykirill
-pip install git+https://github.com/kirilledition/pykirill.git
+```
+
+### GitHub source
+
+You can use pip to install directly from GitHub. This method ensures you always get the latest version. Also gives access to experimental features in development
+
+```bash
+pip install git+https://github.com/kirilledition/pykirill.git@main
+```
+
+### GitHub release
+
+You also can use link to wheel from github releases
+
+```bash
+pip install https://github.com/kirilledition/pykirill/releases/download/2024.2.1/pykirill-2024.2.1-py3-none-any.whl
+```
+
+### GitHub Container Registry
+
+And finally package is also runnable as docker container from GitHub Container Registry
+
+```bash
+docker run --rm -it ghcr.io/kirilledition/pykirill:2024.2.1
 ```
 
 ## Usage
 
-Here are quick examples of how to use `pykirill`:
-
-### Plotting
-```python
-from pykirill import plotting
-
-plotting.setup()
-
-axm = plotting.SubplotsManager(4)
-
-for trajectory_fragment in range(4):
-  frame_values = ...
-
-  ax = axm.nextax()
-  ax.hist(frame_values)
-  ax.set_title(f"Histogram of intensity values of {trajectory_fragment}")
-  ax.set_xlabel("Intensity")
-  ax.set_ylabel("Frequency")
-
-axm.show()
-```
+You can have a look at showcase jupyter notebooks, that shows primitive examples of how to use `pykirill`: [showcase.ipynb](https://kirilledition.github.io/pykirill/showcase/)
 
 ### Transforms
 ```python
 from pykirill import transforms
 
-# For NumPy arrays
-x = np.array([1, 2, 3, 4], dtype=np.float32)
-log_scaled_x = transforms.log_scale(x)
+scaled_data = data.apply(transforms.log_scale)
+pca = transforms.principal_component_analysis(
+  scaled_data, n_components=3
+)
+```
 
-# For Pandas DataFrames
-log_scaled_df = df.apply(transforms.log_scale)
+### Plotting
+```python
+from pykirill import plotting
+plotting.setup()
+
+axm = plotting.SubplotsManager(pca.n_components)
+
+for pc, score in pca.scores.items():
+    ax = axm.nextax()
+
+    ax.set_title(pc)
+    ax.set_ylabel("PC score")
+    ax.set_xlabel("species")
+
+    sns.boxplot(x=target, y=score, ax=ax)
+
+axm.show()
 ```
 
 ## License
 
-`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](https://github.com/kirilledition/pykirill/blob/main/LICENSE) file.
+`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE.md](https://github.com/kirilledition/pykirill/blob/main/LICENSE.md) file.

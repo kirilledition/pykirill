@@ -6,8 +6,7 @@ import numpy as np
 import pytest
 import seaborn as sns
 from matplotlib import pyplot as plt
-
-from pykirill.plotting import SubplotsManager, setup
+from pykirill.plotting import AxesElement, SubplotsManager, setup
 
 
 class TestSetup:
@@ -120,7 +119,7 @@ class TestSubplotsManager:
 
         with unittest.mock.patch("logging.Logger.warning") as mock_warning:
             manager.nextax()
-            mock_warning.assert_any_call("No more subplots available")
+            mock_warning.assert_any_call("No more subplots available, terminate the loop with if ax is None: break")
 
     def test_getitem_method(self):
         manager = SubplotsManager(4, None)
@@ -130,10 +129,20 @@ class TestSubplotsManager:
             manager[5]
 
     def test_iter_method(self):
+        # Initialize the SubplotsManager with 4 subplots
         manager = SubplotsManager(4, None)
-        axes = list(manager)
-        assert len(axes) == 4
-        assert all(isinstance(ax, plt.Axes) for ax in axes)
+
+        # Collect the axes elements
+        axes_elements = list(manager)
+
+        # Assert that there are 4 axes elements returned
+        assert len(axes_elements) == 4
+
+        # Assert that each item is an AxesElement named tuple and that the properties are correct
+        for i, element in enumerate(axes_elements):
+            assert isinstance(element, AxesElement)  # Check if it's an AxesElement
+            assert isinstance(element.ax, plt.Axes)  # Check if the ax is a plt.Axes object
+            assert element.index == i  # Check if the index matches the expected value
 
     def test_maximum_dimensions_in_one_row(self):
         maximum_dimensions = SubplotsManager.MAXIMUM_DIMENSIONS_IN_ONE_ROW
