@@ -51,4 +51,4 @@ log_scaled_df = df.apply(transforms.log_scale)
 
 ## License
 
-`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](LICENSE) file.
+`pykirill` is open-sourced under the MIT license. The details can be found in the [LICENSE](https://github.com/kirilledition/pykirill/blob/main/LICENSE) file.
