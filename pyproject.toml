@@ -5,9 +5,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pykirill"
 description = "🐗 A portable collection of functions for scientific exploration"
-version = "2024.1.0+pca"
+version = "2024.2.0"
 requires-python = ">= 3.10"
-dependencies = ["numpy", "scipy", "matplotlib", "seaborn", "pandas", "scikit-learn"]
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "seaborn",
+    "pandas",
+    "scikit-learn",
+]
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 readme = { file = "README.md", content-type = "text/markdown" }
