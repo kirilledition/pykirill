@@ -73,9 +73,13 @@ def setup() -> None:
 class AxesElement(typing.NamedTuple):
     """
     Represents a Matplotlib Axes object and its index for iteration in a SubplotsManager
+
+    Attributes:
+        idx: The index of the subplot within the axes array.
+        ax: The Matplotlib Axes object for the subplot.
     """
 
-    index: int
+    idx: int
     ax: plt.Axes
 
 
@@ -250,10 +254,10 @@ class SubplotsManager:
         Yields:
             AxesElement: A named tuple containing:
                 - ax The Matplotlib Axes object for the subplot.
-                - index: The index of the subplot within the axes array.
+                - idx: The index of the subplot within the axes array.
         """
         for index, ax in enumerate(self.axes):
-            yield AxesElement(index=index, ax=ax)
+            yield AxesElement(idx=index, ax=ax)
 
 
 def image_show(
@@ -262,7 +266,7 @@ def image_show(
     cmap: str = "gray",
     show_grid: bool = False,
     hide_ticks: bool = True,
-    **kwargs: typing.Unpack[typing.Any],
+    **kwargs: typing.Any,
 ) -> plt.Axes:
     """
     Displays an image on the given Matplotlib Axes.

@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pykirill"
 description = "🐗 A portable collection of functions for scientific exploration"
-version = "2024.2.1"
+version = "2024.2.1+association"
 requires-python = ">= 3.10"
 dependencies = [
     "numpy",
@@ -16,6 +16,7 @@ dependencies = [
     "seaborn",
     "pandas",
     "scikit-learn",
+    "tqdm",
 ]
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
@@ -34,7 +35,6 @@ classifiers = [
 [project.optional-dependencies]
 development = ["pytest", "ruff", "mypy", "ipython", "build"]
 documentation = ["mkdocs-material", "mkdocstrings[python]", "mkdocs-jupyter"]
-pca = ["scikit-learn"]
 
 [project.urls]
 Homepage = "https://kirilledition.github.io/pykirill/"
@@ -53,6 +53,7 @@ include-package-data = true
 testpaths = ["tests", "pykirill"]
 
 [tool.mypy]
+plugins = ["numpy.typing.mypy_plugin"]
 python_version = "3.12"
 files = ["source/pykirill", "tests"]
 ignore_missing_imports = true
