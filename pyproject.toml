@@ -26,6 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -54,11 +55,11 @@ testpaths = ["tests", "pykirill"]
 
 [tool.mypy]
 plugins = ["numpy.typing.mypy_plugin"]
-python_version = "3.12"
+python_version = "3.13"
 files = ["source/pykirill", "tests"]
 ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 120
 indent-width = 4
-target-version = "py312"
+target-version = "py313"
