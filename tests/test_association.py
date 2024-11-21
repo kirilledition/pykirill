@@ -107,14 +107,18 @@ class TestPearsonAssociationStudy:
         assert list(results_df.columns) == expected_columns
         # Check that the results are correct
         statistic, pvalue = scipy.stats.pearsonr(targets, features)
-        expected_df = pd.DataFrame([{
-            "target": "target1",
-            "feature": "feature1",
-            "statistic": statistic,
-            "pvalue": pvalue,
-            "corrected_pvalue": pvalue,
-            "significant": pvalue < 0.05,
-        }])
+        expected_df = pd.DataFrame(
+            [
+                {
+                    "target": "target1",
+                    "feature": "feature1",
+                    "statistic": statistic,
+                    "pvalue": pvalue,
+                    "corrected_pvalue": pvalue,
+                    "significant": pvalue < 0.05,
+                }
+            ]
+        )
         # Now check that results_df matches expected_df
         print(results_df.reset_index(drop=True))
         print("XOXOXO")
