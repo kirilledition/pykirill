@@ -3,12 +3,14 @@ This module contains functions for multiple association analysis like EWAS, GWAS
 This module eventually will become Glaphyra association package
 """
 
+import enum
 import string
 import typing
 
 import numpy as np
 import pandas as pd
 import scipy.stats
+from statsmodels import api as sm
 from tqdm import tqdm
 
 
@@ -136,6 +138,99 @@ def pearson_association_study(
             progress_bar.update()
 
             statistical_result = pearson(target=target, feature=feature)
+            results[i] = statistical_result
+            i += 1
+
+    progress_bar.close()
+
+    results_df = (
+        pd.DataFrame(results, columns=StatisticalResult._fields)
+        .assign(corrected_pvalue=lambda df: df["pvalue"] * n_associations)
+        .assign(significant=lambda df: df["corrected_pvalue"] < 0.05)
+    ).sort_values(by=["significant", "statistic"], ascending=[False, False])
+
+    return results_df
+
+
+class RegressionType(enum.Enum):
+    LINEAR = "linear"
+    LOGISTIC = "logistic"
+
+
+def regression(
+    target: pd.Series, covariates: pd.DataFrame, regression_function: typing.Callable = sm.OLS
+) -> StatisticalResult:
+    model = regression_function(endog=target, exog=covariates).fit()
+    statistic = model.params.iloc[-1]
+    pvalue = model.pvalues.iloc[-1]
+    return StatisticalResult(target=target.name, feature=covariates.columns[-1], statistic=statistic, pvalue=pvalue)
+
+
+def regression_association_study(
+    targets: pd.DataFrame,
+    features: pd.DataFrame,
+    covariates: pd.DataFrame,
+    type: RegressionType = RegressionType.LINEAR,
+    dtype: typing.Type[np.floating] = np.float32,
+) -> pd.DataFrame:
+    if isinstance(targets, pd.Series):
+        if targets.name is None:
+            targets.name = "target"
+        targets = targets.to_frame()
+
+    if isinstance(features, pd.Series):
+        if features.name is None:
+            features.name = "feature"
+        features = features.to_frame()
+
+    if isinstance(covariates, pd.Series):
+        if covariates.name is None:
+            covariates.name = "covariate"
+        covariates = covariates.to_frame()
+
+    if type == RegressionType.LINEAR:
+        regression_function = sm.OLS
+    elif type == RegressionType.LOGISTIC:
+        regression_function = sm.Logit
+    else:
+        raise ValueError("Invalid regression type")
+
+    targets = targets.astype(dtype)
+    features = features.astype(dtype)
+    covariates = covariates.astype(dtype)
+
+    n_associations = targets.shape[1] * features.shape[1]
+
+    feature_name_length = features.columns.astype(str).str.len().max()
+    target_name_length = targets.columns.astype(str).str.len().max()
+
+    StatisticalResultDtype = np.dtype(
+        [
+            ("target", f"U{target_name_length}"),
+            ("feature", f"U{feature_name_length}"),
+            ("statistic", dtype),
+            ("pvalue", dtype),
+        ]
+    )
+
+    results = np.empty(n_associations, dtype=StatisticalResultDtype)
+
+    progress_bar = tqdm(total=n_associations)
+    description_template = string.Template("Processing (${target_name}, ${feature_name})")
+
+    i = 0
+    for target_name, target in targets.items():
+        for feature_name, feature in features.items():
+            progress_bar.set_description(
+                description_template.substitute(target_name=target_name, feature_name=feature_name)
+            )
+            progress_bar.update()
+
+            covariates_with_feature = covariates.assign(**{feature_name: feature})
+
+            statistical_result = regression(
+                target=target, covariates=covariates_with_feature, regression_function=regression_function
+            )
             results[i] = statistical_result
             i += 1
 
