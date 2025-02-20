@@ -31,9 +31,9 @@ class TestGenerateCLIString:
         ansi_escape_pattern = r"\033\[38;2;\d+;\d+;\d+m.*\033\[0m"
         mood_part = re.search(ansi_escape_pattern, cli_string)
         assert mood_part is not None, "CLI string should contain an ANSI escape sequence"
-        assert cli_string.startswith(
-            f"🐗 pykirill {version} says: "
-        ), "CLI string should start with the expected format"
+        assert cli_string.startswith(f"🐗 pykirill {version} says: "), (
+            "CLI string should start with the expected format"
+        )
 
 
 class TestGenerateNotebookString:
@@ -46,6 +46,6 @@ class TestGenerateNotebookString:
         ansi_escape_pattern = r"\033\[38;2;\d+;\d+;\d+m.*\033\[0m"
         mood_part = re.search(ansi_escape_pattern, notebook_string)
         assert mood_part is not None, "Notebook string should contain an ANSI escape sequence"
-        assert notebook_string.startswith(
-            "Before embarking on a journey, 🐗 pykirill foretells a "
-        ), "Notebook string should start with the expected format"
+        assert notebook_string.startswith("Before embarking on a journey, 🐗 pykirill foretells a "), (
+            "Notebook string should start with the expected format"
+        )

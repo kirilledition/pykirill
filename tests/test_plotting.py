@@ -26,9 +26,9 @@ class TestSetup:
         expected_colorblind = sns.color_palette("colorblind")
 
         # Compare the current palette with the expected "colorblind" palette
-        assert all(
-            [a == b for a, b in zip(current_palette, expected_colorblind)]
-        ), "Palette should be 'colorblind', but it's not set correctly"
+        assert all([a == b for a, b in zip(current_palette, expected_colorblind)]), (
+            "Palette should be 'colorblind', but it's not set correctly"
+        )
 
     @unittest.mock.patch.dict(sys.modules, {"IPython": None})
     def test_setup_without_ipython(self):
