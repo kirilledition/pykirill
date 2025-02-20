@@ -17,6 +17,7 @@ dependencies = [
     "pandas",
     "scikit-learn",
     "tqdm",
+    "statsmodels"
 ]
 authors = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
 maintainers = [{ name = "Kirill Denisov", email = "kirill.denisov@gero.ai" }]
