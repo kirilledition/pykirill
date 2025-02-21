@@ -160,7 +160,7 @@ class RegressionType(enum.Enum):
 def regression(
     target: pd.Series, covariates: pd.DataFrame, regression_function: typing.Callable = sm.OLS
 ) -> StatisticalResult:
-    model = regression_function(endog=target, exog=covariates).fit()
+    model = regression_function(endog=target, exog=covariates).fit(disp=0)
     statistic = model.params.iloc[-1]
     pvalue = model.pvalues.iloc[-1]
     return StatisticalResult(target=target.name, feature=covariates.columns[-1], statistic=statistic, pvalue=pvalue)
@@ -170,7 +170,7 @@ def regression_association_study(
     targets: pd.DataFrame,
     features: pd.DataFrame,
     covariates: pd.DataFrame,
-    type: RegressionType = RegressionType.LINEAR,
+    type: RegressionType | str = RegressionType.LINEAR,
     dtype: typing.Type[np.floating] = np.float32,
 ) -> pd.DataFrame:
     if isinstance(targets, pd.Series):
@@ -187,6 +187,9 @@ def regression_association_study(
         if covariates.name is None:
             covariates.name = "covariate"
         covariates = covariates.to_frame()
+
+    if isinstance(type, str):
+        type = RegressionType(type)
 
     if type == RegressionType.LINEAR:
         regression_function = sm.OLS
