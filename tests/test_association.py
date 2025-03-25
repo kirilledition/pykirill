@@ -1,7 +1,7 @@
 import numpy as np
-import scipy.stats
 import pandas as pd
-from pykirill.association import StatisticalResult, statistical_result_to_string, pearson, pearson_association_study
+import scipy.stats
+from pykirill.association import StatisticalResult, pearson, pearson_association_study, statistical_result_to_string
 
 
 class TestStatisticalResult:
@@ -17,7 +17,7 @@ class TestStatisticalResult:
     def test_conversion(self):
         result = StatisticalResult(target="target1", feature="feature1", statistic=0.5, pvalue=0.01)
         result_str = statistical_result_to_string(result)
-        expected_str = "statistic=0.50, pvalue=1.00e-02"
+        expected_str = "statistic=0.50, pvalue=$1.0 \\times 10^{-2}$"
         assert result_str == expected_str
 
 

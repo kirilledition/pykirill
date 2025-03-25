@@ -53,7 +53,13 @@ def statistical_result_to_string(result: StatisticalResult) -> str:
         print(statistical_result_to_string(result))
         ```
     """
-    return f"statistic={result.statistic:.2f}, pvalue={result.pvalue:.2e}"
+
+    p_string = f"{result.pvalue:.1e}"
+    scaler, exponent = p_string.split("e")
+    scaler, exponent = float(scaler), int(exponent)
+    pvalue_scientific = f"${scaler} \\times 10^{{{exponent}}}$"
+
+    return f"statistic={result.statistic:.2f}, pvalue={pvalue_scientific}"
 
 
 def pearson(target: pd.Series, feature: pd.Series) -> StatisticalResult:
