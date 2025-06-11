@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pykirill"
 description = "🐗 A portable collection of functions for scientific exploration"
-version = "2024.3.1+regression"
+version = "2024.3.1+jaxols"
 requires-python = ">= 3.10"
 dependencies = [
     "numpy",
